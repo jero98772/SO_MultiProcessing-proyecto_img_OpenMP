@@ -1,0 +1,1 @@
+# SO_MultiProcessing-proyecto_img_OpenMP
