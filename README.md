@@ -110,7 +110,7 @@ La elección de estas directivas OpenMP se basa en la naturaleza de cada operaci
 - Todas las operaciones crean una nueva imagen, dejando la original sin modificar.
 - Los tiempos de procesamiento se registran en un archivo "tiempos_procesamiento.txt".
 - Las imágenes procesadas se guardan con un sufijo que indica la operación realizada.
-- Se debe crear una caprpeta para las imagens resultado: ./img/resultado/
+- Se debe crear una caprpeta para las imagens resultado: ./img_resultado/
 - Las versiones con OpenMP se guardan con el sufijo adicional "_omp".
 
 
