@@ -286,3 +286,33 @@ void ProcesadorImagen::aplicarKernelConvolucionOpenMP(Archivo_jpeg& archivo) {
     guardarTiempoProcesamiento("aplicarKernelConvolucionOpenMP", tiempo);
     std::cout << "  ...Tiempo de procesamiento (aplicarKernelConvolucionOpenMP): " << tiempo << " ms" << std::endl;
 }
+
+
+void ProcesadorImagen::combineImages(Archivo_jpeg& archivo1,Archivo_jpeg& archivo2, Archivo_jpeg& output) {
+    std::cout << "  > Aplicando combinacion images a la imagen (OpenMP): " << archivo1.obtenerNombreArchivo() <<"+"<< archivo2.obtenerNombreArchivo()  <<std::endl;
+    const auto& datosOriginales = archivo.obtenerDatosImagen();
+    int ancho = max(archivo1.obtenerAncho(),archivo2.obtenerAncho());
+    int alto = max(archivo1.obtenerAlto(),archivo2.obtenerAlto());
+    int numComponentes = archivo.obtenerNumComponentes();
+    std::vector<unsigned char> datosModificados(datosOriginales.size());
+    """
+    #pragma omp parallel for
+            for (int c = 0; c < img1.numComponents; ++c) {
+                // Blend the two images by averaging their pixel values
+                output.data[idx] = (img1.data[idx] + img2.data[idx]) / 2;
+            }
+    """
+    #pragma omp parallel for
+    for (int y = 0; y < alto; ++y) {
+        for (int x = 0; x < ancho / 2; ++x) {
+            for (int c = 0; c < numComponentes; ++c) {
+                
+                """int idx = (y * img1.width + x) * img1.numComponents + c;
+                std::swap(datosModificados[(y * ancho + x) * numComponentes + c],
+                          datosModificados[(y * ancho + (ancho - 1 - x)) * numComponentes + c]);
+                """
+            }
+        }
+    }
+
+}

@@ -11,6 +11,9 @@ void mostrarMenu() {
     std::cout << "2. Binarizar imagen" << std::endl;
     std::cout << "3. Aplicar efecto espejo" << std::endl;
     std::cout << "4. Aplicar kernel de convolución" << std::endl;
+    std::cout << "5. Sumar 2 imagenes" << std::endl;
+    std::cout << "6. Rotar" << std::endl;
+
     std::cout << "0. Salir" << std::endl;
     std::cout << "Seleccione una opción: ";
 }
@@ -88,6 +91,28 @@ int main() {
                     ProcesadorImagen::aplicarKernelConvolucionOpenMP, 
                     archivo);
                 break;
+            case 5:
+                std::string nombreArchivo2;
+                std::cout << "Ingrese el nombre del archivo 2 JPEG: ";
+                std::cin >> nombreArchivo;
+
+                Archivo_jpeg archivo2(nombreArchivo2);
+                if (!archivo2.abrirArchivo()) {
+                    std::cerr << "No se pudo abrir el archivo." << std::endl;
+                    return 1;
+                }
+                ejecutarYCompararFunciones("Sumar 2 imagenes", 
+                    ProcesadorImagen::invertirColores, 
+                    ProcesadorImagen::invertirColoresOpenMP, 
+                    archivo);
+                break;
+            case 6:
+                ejecutarYCompararFunciones("Rotar", 
+                    ProcesadorImagen::invertirColores, 
+                    ProcesadorImagen::invertirColoresOpenMP, 
+                    archivo);
+                break;
+
             case 0:
                 std::cout << "Saliendo del programa..." << std::endl;
                 break;
