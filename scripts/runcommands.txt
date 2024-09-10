@@ -1,0 +1,3 @@
+sum2images: g++ -std=c++11 -o image_sum sum2images.cpp -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
+
+rotate : g++ rotate_image.cpp -o rotate_image `pkg-config --cflags --libs opencv4`
